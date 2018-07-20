@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js ">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+  </script>
+  <meta charset="utf-8">
+  <title>Belt Reviewer</title>
+</head>
+
+<body>
+
+  <div id="books" class="container-fluid form-group">
+
+    <body>
+
+      <div id="top bar" class="container row">
+        <h2 class="text-left col"> Welcome, {{user.alias}}!</h2> {% if messages %}
+        <ul class="messages text-center">
+          {% for message in messages %}
+          <p{% if message.tags %} class="{{ message.tags }} text-success" {% endif %}>{{ message }}</p>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+
+        <div id="right area row" class="text-right">
+          <a href="{% url 'index' %}">Home </a><br>
+          <a href="/books/add">Add Book and Review </a><br>
+          <a href="{% url 'books' %}">Books </a><br>
+          <a href="{% url 'view_users'%}">View users</a><br>
+          <a href="{% url 'logout' %}">Log Out </a>
+        </div>
+      </div>
+      <br><br><br><br>
+      <table class="table table-hover container-fluid border">
+        <thead>
+
+          <h3> <a href="/books/{{book_list.id}}">{{book_list.title}}</a> Reviews</h3>
+          <h5>Author: {{book_list.author_list.author_name}}, Rating: {{average.rating__avg|floatformat:"2"}} </h5> {% for r in review_list %}
+          <hr>
+          <div>
+
+            <h6>User {{r.user_reviews.name}}:</h6> {{r.review}}<br> Rating: {{r.rating}}
+            <form action='process' method='post'> <a href="{{r.id}}/delete" onclick="return confirm('Are you sure?')">Delete</a> {% csrf_token %}
+            </form>
+          </div>
+          {%endfor%}
+
+          </tr>
+        </thead>
+        <div id="right_container" class="container">
+
+          <div id="add_review" class="col-md-12">
+            <form action='/books/{{book_list.id}}/add_review' method='post'>{% csrf_token %}
+              <label for="review">Review:</label>
+              <textarea required class="form-control col-md-5" rows="5" name="review" id="review"></textarea>
+
+              <br> Rating: <select required class="btn dropdown-toggle" name="rating">
+                <option disabled="disabled" value = None></option>
+                <option value = "1" >★</option>
+                <option value = "2" >★★</option>
+                <option value = "3" >★★★</option>
+                <option value = "4" >★★★★</option>
+                <option value = "5" >★★★★★</option>
+            </select>
+              <input type='submit' class="btn-primary " value='Add Review' /> </form>
+          </div>
+        </div>
+  </div>
+  </body>
+
+  </div>
+
+</body>
+
+</html>

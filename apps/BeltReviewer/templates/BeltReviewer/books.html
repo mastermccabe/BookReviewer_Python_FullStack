@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js ">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+  </script>
+  <meta charset="utf-8">
+  <title>Belt Reviewer</title>
+</head>
+
+<body>
+
+  <div id="books" class="container-fluid form-group">
+
+
+
+    <div id="top bar" class="container row">
+      <h2 class="text-left col"> Welcome, {{user.alias}}!</h2> {% if messages %}
+      <ul class="messages text-center">
+        {% for message in messages %}
+        <p{% if message.tags %} class="{{ message.tags }} text-success" {% endif %}>{{ message }}</p>
+          {% endfor %}
+      </ul>
+      {% endif %}
+
+      <div id="right area row" class="text-right">
+        <a href="{% url 'index' %}">Home </a><br>
+        <a href="/books/add">Add Book and Review </a><br>
+        <a href="{% url 'books' %}">Books </a><br>
+        <a href="{% url 'view_users'%}">View users</a><br>
+        <a href="{% url 'logout' %}">Log Out </a>
+      </div>
+    </div>
+    <br><br><br><br>
+    <table class="table table-hover container-fluid border">
+      <thead>
+        <tr>
+          <h3> Recent Book Reviews</h3>
+
+          <th>Book #</th>
+          <th>Title</th>
+          <th> </th>
+          <th>Author</th>
+          <th>Actions</th>
+
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr> {% for u in book_list %}
+          <td scope="row">{{u.id}}</td>
+          <td><a href="/books/{{u.id}}">{{u.title}}</td>
+            <td>{{average.rating__avg}}</td>
+            <td>{{u.author_list.author_name}}</td>
+
+            <form action='process' method='post'>
+              <td><a href="{{u.id}}/delete" onclick="return confirm('Are you sure?')">Delete</a></td>
+        </tr>
+        {%endfor%} {% csrf_token %}
+      </tbody>
+    </table>
+    <hr> {% for r in review_list %}
+
+    <div>
+      <h5>{{r.reviewed_book.title}}:</h5> <br>{{r.review}}<br> Rating: {{r.rating}}
+      <hr>
+    </div>
+    {%endfor%}
+</body>
+
+</div>
+
+</body>
+
+</html>

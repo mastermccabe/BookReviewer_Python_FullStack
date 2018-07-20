@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js ">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+  </script>
+  <title>Belt Reviewer</title>
+</head>
+
+<body>
+  <div id="wrapper" class="container-fluid">
+
+    <div id="top bar" class="container row">
+      <h2 class="text-left col"> Welcome, {{user.alias}}!</h2>
+
+      <div id="right area row" class="text-right">
+        <a href="{% url 'index' %}" class="col">Home </a><br>
+        <a href="/books/add" class="col">Add Book and Review </a><br>
+        <a href="{% url 'books' %}">Books </a>
+        <a href="{% url 'view_users'%}">View users</a>
+        <a href="{% url 'logout' %}">Log Out </a>
+      </div>
+    </div>
+    <div id="add_user" class="container-fluid">
+
+      <form action='/users/show_user' method='post'>{% csrf_token %} Name<br>
+        <input type="text" name="name" value="{{users.name}}"><br> Alias:<br>
+        <input type="text" name="alias" value="{{users.alias}}"><br> Email Name:<br>
+        <input type="text" name="email" value="{{users.email}}"><br> <br>{% if edit == False %}
+        <input type='submit' class="btn-primary" value='Create' /> {% endif %}
+      </form>
+      <br>
+
+      <a href="/users">Go Back</a> / <a href="/users/{{users.id}}/edit">Edit</a>
+    </div>
+
+
+  </div>
+</body>
+
+</html>

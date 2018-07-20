@@ -1,0 +1,7 @@
+{% for r in reviews_list %} {% if book['id'] == reviews['book_id'] %} {%endfor%} {% for comment in all_comments %}
+<div class="form-group form-control">
+
+  <p>{{reviews['review']}} -- {{reviews['user_reviews_id']}}</p>
+
+</div>
+{% endif %} {% endfor %}

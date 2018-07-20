@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js ">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+  </script>
+  <meta charset="utf-8">
+  <title>Belt Reviewer</title>
+</head>
+
+<body>
+
+  <div id="add_user" class="container-fluid form-group">
+
+    <body>
+      {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <h1{% if message.tags %} class="{{ message.tags }} text-success" {% endif %}>{{ message }}</h1>
+          {% endfor %}
+      </ul>
+      {% endif %}
+      <div id="top bar">
+        <h2 class="text-left"> Welcome, {{user.alias}}!</h2>
+        <div id="right area" class="text-right">
+          test
+          <form action="clearsession" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Sign Out">
+          </form>
+        </div>
+      </div>
+      <br><br><br><br>
+      <table class="table table-hover container-fluid border">
+        <thead>
+          <tr>
+            <h3> User List</h3>
+            <th>User #</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr> {% for u in user_list %}
+            <td scope="row">{{u.id}}</td>
+            <td>{{u.name}} "{{u.alias}}"</td>
+            <td>{{u.email}}</td>
+            <td>{{u.created_at}}</td>
+            <form action='process' method='post'>
+              <td><a href="{{u.id}}/delete" onclick="return confirm('Are you sure?')">Delete</a></td>
+          </tr>
+          {%endfor%} {% csrf_token %}
+
+        </tbody>
+      </table>
+    </body>
+
+
+  </div>
+
+</body>
+
+</html>
